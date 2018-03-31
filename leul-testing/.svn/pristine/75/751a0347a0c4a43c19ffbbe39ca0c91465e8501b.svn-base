@@ -1,0 +1,251 @@
+/*
+ * TCSS 305 – Winter 2018 Assignment 1 – Testing.
+ */
+
+import static org.junit.Assert.*;
+
+import java.awt.Color;
+import java.awt.geom.Point2D;
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * This program tests the circle class using the JUnit framework.
+ * 
+ * @author Leul Amare.
+ * 
+ * @version January 17.
+ * 
+ */
+public class CircleTest {
+      
+    /**
+     * A tolerance used to compare the double values for equality.
+     */
+    private static final double TOLERANCE = .000001;
+    
+    /** A Circle  to use in the test. */
+    private  Circle myCircle;
+    
+ 
+    
+    /** A method to initialize the test fixtures before each test.*/
+    // This method runs before each method.
+    @Before
+    public void setUp() { // no need to throw any exception. 
+        myCircle = new Circle(); // Creates a circle object.
+             
+    }
+    
+ 
+    /**
+     * Test method for {@link Circle#Circle()}.
+     * 
+     * Tests the default constructor for each default value.
+     */
+    @Test
+    public void tesDefaultConstructor() {
+        assertEquals(1.0, myCircle.getRadius(), TOLERANCE);
+        assertEquals(new Point2D.Double(0.0, 0.0), myCircle.getCenter());
+        assertEquals(Color.BLACK, myCircle.getColor());
+        
+    }
+    /**
+     * Test method for {@link Circle#Circle(double, java.awt.geom.Point2D, 
+     * java.awt.Color)}.
+     * 
+     * Tests the overloaded constructor for each passed value.
+     */
+    @Test
+    public void testOverloadedConstructor() {
+        //Non default circle with passed values.
+        final Circle cr1 = new Circle(5.0, new Point2D.Double(33.72, 42.39), Color.GRAY);
+        
+        assertEquals(5.0, cr1.getRadius(), TOLERANCE);
+        assertEquals(new Point2D.Double(33.72, 42.39), cr1.getCenter());
+        assertEquals(Color.GRAY, cr1.getColor());
+    }
+    
+    /**
+     * Test method for {@link Circle#Circle(double, java.awt.geom.Point2D, java.awt.Color)}
+     * for a negative radius.
+     * 
+     * Tests the overloaded constructor for a negative radius.
+     */
+   
+    @Test(expected = IllegalArgumentException.class)
+    public void testOverloadedConstructorNullNegativeRadius() {
+        new Circle(-7.0, new Point2D.Double(0.0, 0.0), Color.GREEN);
+    }
+    
+    /**
+     * Test method for {@link Circle#Circle(double, java.awt.geom.Point2D, java.awt.Color)}
+     * for a zero radius.
+     * 
+     * Tests the overloaded constructor for a zero radius.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testOverloadedConstructorNullZeroRadius() {
+        new Circle(0.0, new Point2D.Double(0.0, 0.0), Color.GREEN);
+    }
+    
+    /**
+     * Test method for {@link Circle#Circle(double, java.awt.geom.Point2D, java.awt.Color)}
+     * for a null color.
+     * 
+     * Tests the overloaded constructor for a null color.
+     */
+
+    @Test(expected = NullPointerException.class)
+    public void testOverloadedConstructorNullColor() {
+        new Circle(1.0, new Point2D.Double(0.0, 0.0), null);
+    }
+    /**
+     * Test method for {@link Circle#setRadius(double)}.
+     * 
+     * Tests the radius setting.
+     */
+    @Test
+    public void testSetRadius() {
+        myCircle.setRadius(9.0);
+        assertEquals("setRadius failed to set the radius value correctly.", 
+                     9.0, myCircle.getRadius(), TOLERANCE);
+    }
+    
+    /**
+     * Test method for {@link Circle#setRadius(double)} for a negative radius.
+     * Tests the radius setting for a negative value.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetRadiusNull() {
+        myCircle.setRadius(-3.0);
+    }
+
+    /**
+     * Test method for {@link Circle#setCenter(java.awt.geom.Point2D)}.
+     * 
+     * Tests the center setting.
+     */
+   
+    @Test
+    public void testSetCenter() {
+        myCircle.setCenter(new Point2D.Double(62.00, 56.00));
+        assertEquals("setCenter failed to set the center correctly.", 
+                     new Point2D.Double(62.00, 56.00), myCircle.getCenter());
+        
+    }
+    
+    /**
+     * Test method for {@link Circle#setColor(java.awt.Color)}.
+     * 
+     * Tests the color setting.
+     */
+
+    @Test
+    public void testSetColor() {
+        myCircle.setColor(Color.YELLOW);
+        assertEquals("setColor failed to set the color value correctly.",
+                     Color.YELLOW, myCircle.getColor());
+        
+    }
+    
+    /**
+     * Test method for {@link Circle#setColor(java.awt.Color)}
+     * for a null color.
+     */
+    // Tests the color setting for a null pointer.
+    @Test(expected = NullPointerException.class)
+    public void testSetColorNull() {
+        myCircle.setColor(null);
+        
+    }
+
+    /**
+     * Test method for {@link Circle#getRadius()}.
+     */
+    @Test
+    public void testGetRadius() {
+        
+    }
+
+    /**
+     * Test method for {@link Circle#getCenter()}.
+     */
+    @Test
+    public void testGetCenter() {
+        
+    }
+
+    /**
+     * Test method for {@link Circle#getColor()}.
+     */
+    @Test
+    public void testGetColor() {
+        
+    }
+
+    /**
+     * Test method for {@link Circle#calculateDiameter()}.
+     * 
+     * Tests for both default and non-default circle diameter calculation.
+     */
+    @Test
+    public void testCalculateDiameter() {
+        assertEquals("testCalculateDiameter on default failed.", 
+                     2 * myCircle.getRadius(), 
+                     myCircle.calculateDiameter(), TOLERANCE);
+        
+        //Non default circle.
+        final Circle cr1 = new Circle(9.0, new Point2D.Double(0.0, 0.0), Color.YELLOW);
+        assertEquals("testCalculateDiameter on new failed.", 
+                   2 * cr1.getRadius(), cr1.calculateDiameter(), TOLERANCE);
+ 
+    }
+
+    /**
+     * Test method for {@link Circle#calculateCircumference()}.
+     * 
+     * Tests for both default and non-default circle circumference calculation.
+     */
+    @Test
+    public void testCalculateCircumference() {
+        assertEquals("testCalculateCircumference on default failed.",
+                     2 * myCircle.getRadius() * Math.PI, 
+                     myCircle.calculateCircumference(), TOLERANCE);
+    
+        //Non default circle.
+        final Circle cr1 = new Circle(9.0, new Point2D.Double(0.0, 0.0), Color.YELLOW);
+        assertEquals("testCalculateCircumference on new failed.",
+                     2 * cr1.getRadius() * Math.PI, 
+                     cr1.calculateCircumference(), TOLERANCE);
+        
+    }
+
+    /**
+     * Test method for {@link Circle#calculateArea()}.
+     * 
+     * Tests for both default and non-default circle Area calculation.
+     */
+    @Test
+    public void testCalculateArea() {
+        assertEquals("testCalculateArea on default failed.",
+                     Math.pow(myCircle.getRadius(), 2) * Math.PI, 
+                     myCircle.calculateArea(), TOLERANCE);
+        
+        //Non default circle.
+        final Circle cr1 = new Circle(8.0, new Point2D.Double(0.0, 0.0), Color.RED);
+        assertEquals("testCalculateArea on new failed.", 
+                     Math.pow(cr1.getRadius(), 2) * Math.PI, 
+                     cr1.calculateArea(), TOLERANCE);
+        
+    }
+
+    /**
+     * Test method for {@link Circle#toString()}.
+     */
+    @Test
+    public void testToString() {
+        fail("Not yet implemented");
+    }
+
+}
